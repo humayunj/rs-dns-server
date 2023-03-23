@@ -1,18 +1,23 @@
 use std::net::UdpSocket;
 
 use dns_server::{BytePacketBuffer, DnsPacket, DnsQuestion, QueryType, Result};
-
+use rand;
 fn main() -> Result<()> {
-    let qname = "google.com";
+    // c2::main();
+    // return Ok(());
+
+    let qname = "www.yahoo.com";
     let qtype = QueryType::A;
 
-    let server = ("1.1.1.1", 53);
+    let server = ("127.0.0.1", 53);
 
     let socket = UdpSocket::bind(("0.0.0.0", 43210))?;
 
     let mut packet = DnsPacket::new();
 
-    packet.header.id = 6969;
+    let n: u16 = rand::random();
+
+    packet.header.id = n;
     packet.header.questions = 1;
 
     packet.header.recursion_desired = true;

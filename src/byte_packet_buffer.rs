@@ -135,7 +135,7 @@ impl BytePacketBuffer {
     pub fn write_qname(&mut self, qname: &str) -> Result<()> {
         for label in qname.split('.') {
             let len = label.len();
-            if len > 0x3f {
+            if len > 0x34 {
                 return Err("Single label exceeds 63 chars of length".into());
             }
             self.write_u8(len as u8)?;

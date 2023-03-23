@@ -99,8 +99,8 @@ impl DnsHeader {
             (self.recursion_desired as u8)
                 | (self.truncated_message as u8) << 1
                 | ((self.authoritative_answer as u8) << 2)
-                | self.opcode << 3
-                | (self.response as u8) << 7 as u8,
+                | (self.opcode << 3)
+                | ((self.response as u8) << 7) as u8,
         )?;
 
         buffer.write_u8(
@@ -161,7 +161,7 @@ impl DnsQuestion {
         buffer.write_qname(&self.name)?;
         let typenum = self.qtype.to_num();
         buffer.write_u16(typenum)?;
-        buffer.write(1)?;
+        buffer.write_u16(1)?;
         Ok(())
     }
 }
