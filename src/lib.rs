@@ -7,5 +7,5 @@ mod server;
 pub use byte_packet_buffer::*;
 pub use dns_packet::*;
 pub use error_util::*;
-pub use lookup::lookup;
+pub use lookup::*;
 pub use server::handle_query;

@@ -1,6 +1,6 @@
 use std::net::UdpSocket;
 
-use crate::{lookup, BytePacketBuffer, DnsPacket, Result, ResultCode};
+use crate::{recursive_lookup, BytePacketBuffer, DnsPacket, Result, ResultCode};
 
 pub fn handle_query(socket: &UdpSocket) -> Result<()> {
     let mut req_buffer = BytePacketBuffer::new();
@@ -20,7 +20,7 @@ pub fn handle_query(socket: &UdpSocket) -> Result<()> {
     if let Some(question) = request.questions.pop() {
         println!("Received query: {:?}", question);
 
-        if let Ok(result) = lookup(&question.name, question.qtype) {
+        if let Ok(result) = recursive_lookup(&question.name, question.qtype) {
             packet.questions.push(question);
             packet.header.rescode = result.header.rescode;
 
